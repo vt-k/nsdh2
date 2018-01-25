@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="nsdh_file">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="network_settings">
+          <xs:complexType>
+            <xs:sequence>
+            <xs:element name="routing_type" minOccurs="0">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="manual"/>
+                      <xs:enumeration value="auto"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              <xs:element name="queue_policy" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="scheduler" minOccurs="0">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="PRI"/>
+                          <xs:enumeration value="WRR"/>
+                          <xs:enumeration value="WIRR"/>
+                          <xs:enumeration value="RR"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>	
+                    <xs:element name="mean_packet_size" type="xs:string" minOccurs="0" />
+                    <xs:element name="queue" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="scheduler_params" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="priority" type="xs:string" minOccurs="0" />
+                                <xs:element name="rate" type="xs:string" minOccurs="0" />
+                                <xs:element name="weight" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="policer" minOccurs="0">
+                              <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                  <xs:enumeration value="TSW2CM"/>
+                                  <xs:enumeration value="TSW3CM"/>
+                                  <xs:enumeration value="TokenBucket"/>
+                                  <xs:enumeration value="srTCM"/>
+                                  <xs:enumeration value="trTCM"/>
+                                  <xs:enumeration value="NullPolicer"/>
+                                  <xs:enumeration value="None"/>
+                                </xs:restriction>
+                              </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="policer_entry" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="CIR" type="xs:string" minOccurs="0" />
+                                <xs:element name="CBS" type="xs:string" minOccurs="0" />
+                                <xs:element name="PIR" type="xs:string" minOccurs="0" />
+                                <xs:element name="PBS" type="xs:string" minOccurs="0" />
+                                <xs:element name="EBS" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                              <xs:attribute name="service" type="xs:string" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="subqueue" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="min_threshold" type="xs:string" minOccurs="0" />
+                                <xs:element name="max_threshold" type="xs:string" minOccurs="0"  />
+                                <xs:element name="probability_dropping" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                              <xs:attribute name="ordinal" type="xs:string" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="service" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="server_transport" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+						  <xs:element name="server_agent" minOccurs="0">
+		                      <xs:simpleType>
+		                        <xs:restriction base="xs:string">
+		                          <xs:enumeration value="Agent/TCP"/>
+		                          <xs:enumeration value="Agent/TCP/Reno"/>
+		                          <xs:enumeration value="Agent/TCP/Newreno"/>
+		                          <xs:enumeration value="Agent/TCP/Sack1"/>
+								  <xs:enumeration value="Agent/TCP/Vegas"/>
+								  <xs:enumeration value="Agent/TCP/Fack"/>
+								  <xs:enumeration value="Agent/TCP/Linux"/>
+								  <xs:enumeration value="Agent/UDP"/>
+		                        </xs:restriction>
+		                      </xs:simpleType>
+		                  </xs:element>
+						  <xs:element name="server_agent_params" minOccurs="0" maxOccurs="unbounded">
+						    <xs:complexType>
+						      <xs:sequence>
+						        <xs:element name="fid" type="xs:string" minOccurs="0" />
+						        <xs:element name="prio" type="xs:string" minOccurs="0" />
+						        <xs:element name="flags" type="xs:string" minOccurs="0" />
+						        <xs:element name="ttl" type="xs:string" minOccurs="0" />
+						        <xs:element name="server_agent_TCP_params" minOccurs="0" maxOccurs="unbounded">
+						          <xs:complexType>
+						            <xs:sequence>
+						              <xs:element name="window" type="xs:string" minOccurs="0" />
+						              <xs:element name="windowInit" type="xs:string" minOccurs="0" />
+						              <xs:element name="windowOption" type="xs:string" minOccurs="0" />
+						              <xs:element name="windowConstant" type="xs:string" minOccurs="0" />
+						              <xs:element name="windowThresh" type="xs:string" minOccurs="0" />
+						              <xs:element name="overhead" type="xs:string" minOccurs="0" />
+						              <xs:element name="ecn" type="xs:string" minOccurs="0" />
+						              <xs:element name="packetSize" type="xs:string" minOccurs="0" />
+						              <xs:element name="bugFix" type="xs:string" minOccurs="0" />
+						              <xs:element name="slow_start_restart" type="xs:string" minOccurs="0" />
+						              <xs:element name="tcpTick" type="xs:string" minOccurs="0" />
+						              <xs:element name="server_agent_TCP_NewReno_params" minOccurs="0" maxOccurs="unbounded">
+						                <xs:complexType>
+						                  <xs:sequence>
+						                    <xs:element name="newreno_changes" type="xs:string" minOccurs="0" />
+						                  </xs:sequence>
+						                </xs:complexType>
+						              </xs:element>
+						            </xs:sequence>
+						          </xs:complexType>
+						        </xs:element>
+						        <xs:element name="server_agent_UDP_params" minOccurs="0" maxOccurs="unbounded">
+						          <xs:complexType>
+						            <xs:sequence>
+						              <xs:element name="packetSize" type="xs:string" minOccurs="0" />
+						            </xs:sequence>
+						          </xs:complexType>
+						        </xs:element>
+						      </xs:sequence>
+						    </xs:complexType>
+						  </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="server_application" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="type" minOccurs="0">
+		                      <xs:simpleType>
+		                        <xs:restriction base="xs:string">
+		                          <xs:enumeration value="Application/Traffic/Exponential"/>
+								  <xs:enumeration value="Application/Traffic/Pareto"/>
+								  <xs:enumeration value="Application/Traffic/CBR"/>
+								  <xs:enumeration value="Application/Telnet"/>
+								  <xs:enumeration value="Application/FTP"/>
+		                        </xs:restriction>
+		                      </xs:simpleType>
+		                  </xs:element>
+                          <xs:element name="application_Traffic_Exponential_params" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="packetSize" type="xs:string" minOccurs="0" />
+                                <xs:element name="burst_time" type="xs:string" minOccurs="0" />
+                                <xs:element name="idle_time" type="xs:string" minOccurs="0" />
+                                <xs:element name="rate" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="application_Traffic_Pareto_params" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="packetSize" type="xs:string" minOccurs="0" />
+                                <xs:element name="burst_time" type="xs:string" minOccurs="0" />
+                                <xs:element name="idle_time" type="xs:string" minOccurs="0" />
+                                <xs:element name="rate" type="xs:string" minOccurs="0" />
+                                <xs:element name="shape" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="application_Traffic_CBR_params" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="rate" type="xs:string" minOccurs="0" />
+                                <xs:element name="interval" type="xs:string" minOccurs="0" />
+                                <xs:element name="packetSize" type="xs:string" minOccurs="0" />
+                                <xs:element name="random" type="xs:string" minOccurs="0" />
+                                <xs:element name="maxpkts" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="application_Telnet_params" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="interval" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="application_FTP_params" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="maxpkts" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="client_sink" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="client_agent" minOccurs="0">
+		                      <xs:simpleType>
+		                        <xs:restriction base="xs:string">
+		                          <xs:enumeration value="Agent/TCPSink"/>
+								  <xs:enumeration value="Agent/TCPSink/DelAck"/>
+								  <xs:enumeration value="Agent/TCPSink/Sack1"/>
+								  <xs:enumeration value="Agent/TCPSink/Sack1/DelAck"/>
+								  <xs:enumeration value="Agent/Null"/>
+		                        </xs:restriction>
+		                      </xs:simpleType>
+		                  </xs:element>
+                          <xs:element name="client_agent_params" minOccurs="0" maxOccurs="unbounded">
+						    <xs:complexType>
+						      <xs:sequence>
+						        <xs:element name="fid" type="xs:string" minOccurs="0" />
+						        <xs:element name="prio" type="xs:string" minOccurs="0" />
+						        <xs:element name="flags" type="xs:string" minOccurs="0" />
+						        <xs:element name="ttl" type="xs:string" minOccurs="0" />
+						        <xs:element name="client_agent_TCPSink_params" minOccurs="0" maxOccurs="unbounded">
+						          <xs:complexType>
+						            <xs:sequence>
+						              <xs:element name="packetSize" type="xs:string" minOccurs="0" />
+						              <xs:element name="maxSackBlocks" type="xs:string" minOccurs="0" />
+						              <xs:element name="client_agent_TCPSink_DelAck_params" minOccurs="0" maxOccurs="unbounded">
+						                <xs:complexType>
+						                  <xs:sequence>
+						                    <xs:element name="interval" type="xs:string" minOccurs="0" />
+						                  </xs:sequence>
+						                </xs:complexType>
+						              </xs:element>
+						              <xs:element name="client_agent_TCPSink_Sack1_DelAck_params" minOccurs="0" maxOccurs="unbounded">
+						                <xs:complexType>
+						                  <xs:sequence>
+						                    <xs:element name="interval" type="xs:string" minOccurs="0" />
+						                  </xs:sequence>
+						                </xs:complexType>
+						              </xs:element>
+						            </xs:sequence>
+						          </xs:complexType>
+						        </xs:element>
+						      </xs:sequence>
+						    </xs:complexType>
+						  </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="network_structure">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="router" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="gui_x" type="xs:string" minOccurs="0" />
+                    <xs:element name="gui_y" type="xs:string" minOccurs="0" />
+                    
+
+                    <xs:element name="routing_table_row" minOccurs="0" maxOccurs="unbounded">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="packet_destination" type="xs:string" minOccurs="0" />
+                            <xs:element name="next_hop" type="xs:string" minOccurs="0" />
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+
+
+
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="pc" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="gui_x" type="xs:string" minOccurs="0" />
+                    <xs:element name="gui_y" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="server_client_connection" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="server_pc" type="xs:string" minOccurs="0" />
+                    <xs:element name="client_pc" type="xs:string" minOccurs="0" />
+                    <xs:element name="service" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="standard_link" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="node1" type="xs:string" minOccurs="0" />
+                    <xs:element name="node2" type="xs:string" minOccurs="0" />
+                    <xs:element name="delay" type="xs:string" minOccurs="0" />
+                    <xs:element name="bandwidth" type="xs:string" minOccurs="0" />
+					<xs:element name="queue_limit" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="edge_core_link" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="queue_policy" type="xs:string" minOccurs="0" />
+                    <xs:element name="edge_router" type="xs:string" minOccurs="0" />
+                    <xs:element name="core_router" type="xs:string" minOccurs="0" />
+                    <xs:element name="delay" type="xs:string" minOccurs="0" />
+                    <xs:element name="bandwidth" type="xs:string" minOccurs="0" />
+					<xs:element name="queue_limit" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="core_core_link" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="queue_policy" type="xs:string" minOccurs="0" />
+                    <xs:element name="core_router1" type="xs:string" minOccurs="0" />
+                    <xs:element name="core_router2" type="xs:string" minOccurs="0" />
+                    <xs:element name="delay" type="xs:string" minOccurs="0" />
+                    <xs:element name="bandwidth" type="xs:string" minOccurs="0" />
+					<xs:element name="queue_limit" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="scenario">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="total_time" type="xs:string" minOccurs="0" />
+              <xs:element name="event" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="time" type="xs:string" minOccurs="0" />
+                    <xs:element name="server_client_connection" type="xs:string" minOccurs="0" />
+					<xs:element name="command" minOccurs="0">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="start"/>
+                          <xs:enumeration value="stop"/>
+                          <xs:enumeration value="produce"/>
+                          <xs:enumeration value="producemore"/>
+						  <xs:enumeration value="send"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="value" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="optimizer_input">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="optimization_variable" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="mapping_expression" type="xs:string" />
+                    <xs:element name="min_value" type="xs:string" />
+                    <xs:element name="max_value" type="xs:string" />
+                    <xs:element name="start_value" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="target_function_arguement" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="mapping_expression" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="target_function" type="xs:string" />
+              <xs:element name="N_param" type="xs:string" />
+              <xs:element name="K_param" type="xs:string" />
+              <xs:element name="maxIter_param" type="xs:string" />
+              <xs:element name="maxPTries_param" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
