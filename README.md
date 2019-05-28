@@ -11,4 +11,4 @@ Command to run nsDH: <code>java -jar nsDH_v1.0.jar</code>
 
 Screenshot:
 
-![Alt text](../../releases/download/1.0/nsdh-screenshot.png?raw=true "Screenshot")
+![Screenshot](../../releases/download/1.0/nsdh-screenshot.png?raw=true)
