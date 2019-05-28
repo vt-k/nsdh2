@@ -9,6 +9,4 @@ Installation of NS-2 network simulator is needed to run nsDH: http://nsnam.sourc
 
 Command to run nsDH: <code>java -jar nsDH_v1.0.jar</code>
 
-Screenshot:
-
-![Screenshot](../../releases/download/1.0/nsdh-screenshot.png?raw=true)
+![obraz](https://user-images.githubusercontent.com/11978509/58466557-262bc600-813a-11e9-8028-09a41b3d57ec.png)
